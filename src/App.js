@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <Route path="/login" component={LoginForm}></Route>
-      <Route path="/profile" component={Profile}></Route>
+      <Route path="/profile" component={Profile}></Route> 
       <Route path="/register" component={Register}></Route>
     </Router>
   );

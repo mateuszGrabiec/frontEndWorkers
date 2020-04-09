@@ -29,7 +29,7 @@ class LoginForm extends Component {
         e.preventDefault()
         const data = { email: this.state.email, passsword: this.state.passsword }
         axios('http://mockbin.com/request?foo=bar&foo=baz',data)
-        .then(res => console.log(res))//TODO remove after tests
+        .then(res => console.log(res))//TODO remove after tests 
         .catch(e => console.log(e)) 
         //this.props.history.push('/profile')
     }

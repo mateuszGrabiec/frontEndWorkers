@@ -37,7 +37,7 @@ export default class Register extends Component {
             role: this.state.role
         }
         axios('http://mockbin.com/request?foo=bar&foo=baz',data)
-        .then(res => console.log(res))//TODO remove after tests
+        .then(res => console.log(res))//TODO remove after tests 
         .catch(e => console.log(e)) 
         //this.props.history.push('/profile')
     }
