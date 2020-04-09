@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input }
+import axios from 'axios';
+import { Form, FormGroup, Label, Input}
     from 'reactstrap';
 
 class LoginForm extends Component {
+
+    instance = axios.create({
+        method: 'post',
+        mode: 'cors',
+        headers: {
+            common: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        },
+    });
 
     constructor(props) {
         super(props)
         this.state = {
             email: '',
-            passsword: '',
+            password: '',
         };
     }
 
@@ -16,18 +28,10 @@ class LoginForm extends Component {
     handleForm = e => {
         e.preventDefault()
         const data = { email: this.state.email, passsword: this.state.passsword }
-        fetch('http://localhost:8080/api/auth/login', {
-            method: 'post',
-            mode: 'cors',
-            body: JSON.stringify(data),
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        })
-            .then(res => res.json())
-            .then(res => console.log(res))
-        this.props.history.push('/profile')
+        axios('http://mockbin.com/request?foo=bar&foo=baz',data)
+        .then(res => console.log(res))//TODO remove after tests
+        .catch(e => console.log(e)) 
+        //this.props.history.push('/profile')
     }
 
     handleInput = (e) => {
@@ -55,7 +59,7 @@ class LoginForm extends Component {
                 </FormGroup>
                 <input className="btn btn-success" type="submit" />
                 <div className="text-center">
-                    <a href="/sign-up">Sign up</a>
+                    <a href="/register">Sign up</a>
                     <span className="p-2">|</span>
                     <a href="/remebr-passsword">Forgot Password</a>
                 </div>
