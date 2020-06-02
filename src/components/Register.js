@@ -87,7 +87,7 @@ export default class Register extends Component {
             <div className="text-center">
                 <a href="/login">Log in</a>
                 <span className="p-2">|</span>
-                <a href="/remebr-passsword">Forgot Password</a>
+                <a href="/remeber-passsword">Forgot Password</a>
             </div>
         </Form>
         )

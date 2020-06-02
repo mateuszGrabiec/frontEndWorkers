@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Form, FormGroup, Label, Input}
     from 'reactstrap';
 
-class LoginForm extends Component {
+class ResetPassword extends Component {
 
     instance = axios.create({
         method: 'post',
@@ -20,7 +20,6 @@ class LoginForm extends Component {
         super(props)
         this.state = {
             email: '',
-            password: '',
         };
     }
 
@@ -51,21 +50,14 @@ class LoginForm extends Component {
         </Label>
                     <Input type="email" placeholder="Email" onChange={this.handleInput}></Input>
                 </FormGroup>
-                <FormGroup>
-                    <Label>
-                        Password
-        </Label>
-                    <Input type="password" placeholder="Password" onChange={this.handleInput}></Input>
-                </FormGroup>
                 <input className="btn btn-success" type="submit" />
                 <div className="text-center">
-                    <a href="/register">Sign up</a>
+                    <a href="/login">Log in</a>
                     <span className="p-2">|</span>
-                    <a href="/remeber-passsword">Forgot Password</a>
+                    <a href="/register">Sign up</a>
                 </div>
             </Form>
         );
     }
 }
-
-export default LoginForm;
+export default ResetPassword
