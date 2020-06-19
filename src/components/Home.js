@@ -7,21 +7,13 @@ import DataTable from './DataTable'
 class Home extends Component {
 
     state = {
-        items: [
-           {id: 1,
-        first: "Name",
-        last: "Surname",
-        email: "adsda@ps.pl",
-        phone: "123122313",
-        location: "XYZ",
-        hobby: "no"
-           }
-        ]
+        headers: [""],
+        items: []
       }
     
       getItems(){
-        fetch('http://localhost:3000/crud')
-          .then(response => response.json())
+        axios.get('https://pkowaleckicarsapi.herokuapp.com/allVechicles')
+          .then(res=>res.data)
           .then(items => this.setState({items}))
           .catch(err => console.log(err))
       }
@@ -50,7 +42,7 @@ class Home extends Component {
         this.setState({ items: updatedItems })
       }
     
-      componentDidMount(){
+     componentDidMount(){
         this.getItems()
       }
 
