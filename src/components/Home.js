@@ -10,9 +10,16 @@ class Home extends Component {
         headers: [""],
         items: []
       }
+
+      //CAR API
+      //https://pkowaleckicarsapi.herokuapp.com/allVechicles
+      //PLACE API
+      //https://placowki.herokuapp.com/places/all
+
     
       getItems(){
         axios.get('https://pkowaleckicarsapi.herokuapp.com/allVechicles')
+          //.then(res=>console.log(res))
           .then(res=>res.data)
           .then(items => this.setState({items}))
           .catch(err => console.log(err))

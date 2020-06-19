@@ -25,7 +25,7 @@ class DataTable extends Component {
 
   }
 
-  getField = item => {
+  getFieldName = item => {
     let names = []
     for (var key in item) {
       names.push(key);
@@ -35,7 +35,7 @@ class DataTable extends Component {
 
   headers = ()=> {
     let oneItem =this.props.items[0];
-    let names = this.getField(oneItem);
+    let names = this.getFieldName(oneItem);
     const tdNames = []
 
     for (const [index, value] of names.entries()) {
@@ -44,19 +44,30 @@ class DataTable extends Component {
     return tdNames; 
   }
 
+  getValues = item =>{
+      let values = []
+      for (const value in item){
+        values.push(item[value])
+      }
+      return values
+  }
+
+  putValsInTd = values=>{
+    let valTd=[]
+    for(let i=1;i<values.length;i++){
+      valTd.push(<td key={i}>{values[i]}</td>)
+    }
+    return valTd
+  }
+
   render() {
 
     const items = this.props.items.map(item => {
-      this.headers();
+      const values = this.getValues(item)
       return (
-        <tr key={item.id}>
-          <th scope="row">{item.id}</th>
-          <td>{item.names}</td>
-          <td>{item.last}</td>
-          <td>{item.email}</td>
-          <td>{item.phone}</td>
-          <td>{item.location}</td>
-          <td>{item.hobby}</td>
+        <tr key={values[0]}>
+          <th scope="row">{values[0]}</th>
+          {this.putValsInTd(values)}
           <td>
             <div style={{ width: "110px" }}>
               <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} />
