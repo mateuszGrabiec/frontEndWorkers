@@ -3,7 +3,7 @@ import './App.css';
 import LoginForm from './components/LoginForm';
 import Register from './components/Register';
 import ResetPassword from './components/ResetPassword';
-import Home from './components/Home';
+import DataManager from './components/DataManager';
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,7 +19,7 @@ function App() {
       <Route path="/profile" component={Profile}></Route> 
       <Route path="/register" component={Register}></Route>
       <Route path="/remeber-passsword" component={ResetPassword}></Route>
-      <Route path="/" component={Home}></Route>
+      <Route path="/" component={DataManager}></Route>
       </Switch>
     </Router>
   );

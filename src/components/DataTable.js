@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
+import axios from 'axios';
 
 class DataTable extends Component {
 
   deleteItem = id => {
-    let confirmDelete = window.confirm('Delete item forever?')
-    if (confirmDelete) {
-      fetch('http://localhost:3000/crud', {
-        method: 'delete',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id
-        })
+    let delRequest = this.props.delEndpoint + id
+    axios.delete(delRequest
+    )
+      .then(res => {
+        console.log(res.status)
+        if(res.status===200) alert("Place has been deleted")
+        else alert("Place has not been deleted try again or contact with our IT department")
       })
-        .then(response => response.json())
-        .then(item => {
-          this.props.deleteItemFromState(id)
-        })
-        .catch(err => console.log(err))
-    }
-
+      .then(() => {
+              this.props.deleteItemFromState(id)
+            })
+      .catch(err =>{
+        alert("Place has not been deleted try again or contact with our IT department")
+        console.log(err)
+      })
   }
 
   getFieldName = item => {
@@ -33,35 +31,35 @@ class DataTable extends Component {
     return names;
   }
 
-  headers = ()=> {
-    let oneItem =this.props.items[0];
+  headers = () => {
+    let oneItem = this.props.items[0];
     let names = this.getFieldName(oneItem);
     const tdNames = []
 
     for (const [index, value] of names.entries()) {
       tdNames.push(<td key={index}>{value}</td>)
     }
-    return tdNames; 
+    return tdNames;
   }
 
-  getValues = item =>{
-      let values = []
-      for (const value in item){
-        values.push(item[value])
-      }
-      return values
+  getValues = item => {
+    let values = []
+    for (const value in item) {
+      values.push(item[value])
+    }
+    return values
   }
 
-  putValsInTd = values=>{
-    let valTd=[]
-    for(let i=1;i<values.length;i++){
+  putValsInTd = values => {
+    let valTd = []
+    for (let i = 1; i < values.length; i++) {
       valTd.push(<td key={i}>{values[i]}</td>)
     }
     return valTd
   }
 
   render() {
-
+    const edit = this.props.editEndpoint
     const items = this.props.items.map(item => {
       const values = this.getValues(item)
       return (
@@ -70,8 +68,7 @@ class DataTable extends Component {
           {this.putValsInTd(values)}
           <td>
             <div style={{ width: "110px" }}>
-              <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} />
-              {' '}
+              <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} editEndpoint={this.props.editEndpoint} />
               <Button color="danger" onClick={() => this.deleteItem(item.id)}>Del</Button>
             </div>
           </td>
