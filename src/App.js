@@ -5,7 +5,7 @@ import Register from './components/Register';
 import ResetPassword from './components/ResetPassword';
 import DataManager from './components/DataManager';
 import LoginGoogle from './components/loginGoogle';
-import PrivateRoute from './components/PrivateRoute'
+import PrivateRouter from './components/PrivateRouter'
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,7 +22,7 @@ function App() {
       <Route path="/profile" component={Profile}></Route> 
       <Route path="/register" component={Register}></Route>
       <Route path="/remeber-passsword" component={ResetPassword}></Route>
-      <PrivateRoute path="/manager" component={DataManager}></PrivateRoute>
+      <PrivateRouter path="/manager" component={DataManager}></PrivateRouter>
       </Switch>
     </Router>
     

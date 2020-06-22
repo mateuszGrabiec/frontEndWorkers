@@ -3,31 +3,27 @@ import GoogleLogin, {GoogleLogout} from 'react-google-login';
 
 class LoginForm extends Component {
     state={
-        image:localStorage.getItem('image')
+        image:''
     }
 
     responseGoogle = response => {
         localStorage.setItem('image',response.profileObj.imageUrl)
-        localStorage.setItem('isLogged', true)
+        localStorage.setItem('isLogged', response.profileObj)
         this.setState({image:localStorage.getItem('image')})       
     }
 
     logout=()=>{
-        localStorage.setItem('image','')
-        localStorage.setItem('isLogged', false)
+        localStorage.removeItem('image')
+        localStorage.removeItem('isLogged')
         this.setState({image:''})
-    }
-
-    checkIsLogged=()=>{
-        alert(this.state.login)
     }
     render(){
         return (
             <div>
-                <img src={this.state.image}/>
+                <img src={localStorage.getItem('image')}/>
                 <h1>Log in with Google</h1>
                 <GoogleLogin
-                    clientId="397144125802-ou47qad7gi153o9qk0jqm5opnr5ml5pg.apps.googleusercontent.com"
+                    clientId="784572361533-ongul1hh1kpseg30va1q4sp828gd4bs9.apps.googleusercontent.com"
                     buttonText="Login"
                     onSuccess={this.responseGoogle}
                     onFailure={this.responseGoogle}
@@ -35,7 +31,7 @@ class LoginForm extends Component {
                     cookiePolicy={"single_host_origin"}
                 />
                 <GoogleLogout
-                    clientId="397144125802-ou47qad7gi153o9qk0jqm5opnr5ml5pg.apps.googleusercontent.com"
+                    clientId="784572361533-ongul1hh1kpseg30va1q4sp828gd4bs9.apps.googleusercontent.com"
                     buttonText="Logout"
                     onLogoutSuccess={this.logout}
                 >

@@ -3,9 +3,7 @@ import { Redirect, Route } from 'react-router-dom'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
-  // Add your own authentication on the below line.
-  const isLoggedIn = localStorage.getItem('isLogged')
-  console.log(isLoggedIn)
+  const isLoggedIn = localStorage.getItem('isLogged')!=null
   return (
     <Route
       {...rest}
