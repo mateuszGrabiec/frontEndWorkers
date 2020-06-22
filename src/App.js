@@ -4,6 +4,8 @@ import LoginForm from './components/LoginForm';
 import Register from './components/Register';
 import ResetPassword from './components/ResetPassword';
 import DataManager from './components/DataManager';
+import LoginGoogle from './components/loginGoogle';
+import PrivateRoute from './components/PrivateRoute'
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,12 +18,14 @@ function App() {
     <Router>
       <Switch>
       <Route path="/login" component={LoginForm}></Route>
+      <Route path="/login-google" component={LoginGoogle}></Route>
       <Route path="/profile" component={Profile}></Route> 
       <Route path="/register" component={Register}></Route>
       <Route path="/remeber-passsword" component={ResetPassword}></Route>
-      <Route path="/" component={DataManager}></Route>
+      <PrivateRoute path="/manager" component={DataManager}></PrivateRoute>
       </Switch>
     </Router>
+    
   );
 }
 

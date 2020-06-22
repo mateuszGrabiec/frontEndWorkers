@@ -91,10 +91,15 @@ class DataManager extends Component {
       <Container className="crud">
         <Row>
           <Col>
+          <img src={localStorage.getItem('image')}/>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <h1 style={{ margin: "20px 0" }}>{this.state.apiName}</h1>
           </Col>
           <Col>
-            <Button onClick={this.switchAPI.bind(this)}>Switch data</Button>
+            <Button style={{ margin: "20px 0" }} onClick={this.switchAPI.bind(this)}>Switch data</Button>
           </Col>
         </Row>
         <Row>
