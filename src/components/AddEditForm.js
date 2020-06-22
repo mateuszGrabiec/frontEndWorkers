@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import axios from 'axios';
 import { Component } from 'react';
 
 class AddEditForm extends Component {
@@ -17,37 +16,36 @@ class AddEditForm extends Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    axios('http://localhost:3000/crud', {
-      method: 'post',
+    console.log(JSON.stringify(this.state.itemHolder))
+    fetch(this.props.addEndpoint, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state.itemHolder)
     })
-      .then(response => response.json())
-      .then(item => {
-        if(Array.isArray(item)) {
-          this.props.addItemToState(item[0])
-          this.props.toggle()
-        } else {
-          console.log('failure')
-        }
-      })
-      .catch(err => console.log(err))
+    .then(res =>{
+      if(res.status%200<100 && res.status<400){
+        this.props.addItemToState(this.state.itemHolder)
+        this.props.toggle()
+      } else {
+        alert("You propably put wrong data type")
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   submitFormEdit = e => {
     e.preventDefault()
-    console.log(this.props.editEndpoint)
-    axios.put(this.props.editEndpoint+this.state.editedId, {
-      method: 'put',
+    fetch(this.props.editEndpoint+this.state.editedId, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: this.state.itemHolder
+      body: JSON.stringify(this.state.itemHolder)
     })
       .then(res => {
-        if(res.status===200){
+        if(res.status%200<100){
           this.props.updateState(this.state.itemHolder)
           this.props.toggle()
         } else {
@@ -58,7 +56,6 @@ class AddEditForm extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.editEndpoint)
     // if item exists, populate the state with proper data
     if(this.props.item){
       this.setState({itemHolder:this.props.item})
@@ -87,7 +84,7 @@ class AddEditForm extends Component {
     const vals = this.getFieldVal(item)
     const labelNames = []
 
-    for (let i=0;i<vals.length;i++) {
+    for (let i=1;i<vals.length;i++) {
       labelNames.push(
         <FormGroup>
           <Label for={names[i]}>{names[i]}</Label>
@@ -100,7 +97,7 @@ class AddEditForm extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
+      <Form onSubmit={this.props.item.id ? this.submitFormEdit : this.submitFormAdd}>
         {this.headers(this.props.item)}
         <Button>Submit</Button>
       </Form>

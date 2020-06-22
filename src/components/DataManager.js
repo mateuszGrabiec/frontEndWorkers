@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Container, Row, Col, Button } from 'reactstrap';
 import ModalForm from './Modal'
 import DataTable from './DataTable'
@@ -9,6 +8,7 @@ class DataManager extends Component {
   state = {
     editEndpoint: 'https://pkowaleckicarsapi.herokuapp.com/editCar/',
     delEndpoint: 'https://pkowaleckicarsapi.herokuapp.com/deleteCar/',
+    addEndpoint: 'https://pkowaleckicarsapi.herokuapp.com/addCar',
     apiName: 'Cars',
     apiString: 'https://pkowaleckicarsapi.herokuapp.com/allVechicles',
     items: []
@@ -19,6 +19,7 @@ class DataManager extends Component {
       this.setState({ apiName: 'Places' })
       this.setState({ delEndpoint: 'https://placowki.herokuapp.com/places/delete/' })
       this.setState({ editEndpoint: 'https://placowki.herokuapp.com/places/editPlace/' })
+      this.setState({ addEndpoint: 'https://placowki.herokuapp.com/places/add' })
       this.setState({ apiString: 'https://placowki.herokuapp.com/places/all' }, () => {
         this.getItems()
       })
@@ -27,6 +28,7 @@ class DataManager extends Component {
       this.setState({ apiName: 'Cars' })
       this.setState({ delEndpoint: 'https://pkowaleckicarsapi.herokuapp.com/deleteCar/' })
       this.setState({ editEndpoint: 'https://pkowaleckicarsapi.herokuapp.com/editCar/' })
+      this.setState({ addEndpoint: 'https://pkowaleckicarsapi.herokuapp.com/addCar' })
       this.setState({ apiString: 'https://pkowaleckicarsapi.herokuapp.com/allVechicles' }, () => {
         this.getItems()
       })
@@ -36,9 +38,9 @@ class DataManager extends Component {
   }
 
   getItems() {
-    axios.get(this.state.apiString)
-      //.then(res=>console.log(res))
-      .then(res => res.data)
+    fetch(this.state.apiString)
+      //.then(res=>console.log(res.json()))
+      .then(res => res.json())
       .then(items => this.setState({ items }))
       .catch(err => console.log(err))
   }
@@ -70,8 +72,11 @@ class DataManager extends Component {
   cleaerItem = item =>{
     let clearedItem=Object.assign({},item)
     for (var key in clearedItem) {
-      clearedItem[key]='';
+      if(typeof clearedItem[key]=== 'string')
+        clearedItem[key]='';
+      else clearedItem[key]=0
     }
+    clearedItem['id']=null
     return clearedItem
   }
 
@@ -99,7 +104,7 @@ class DataManager extends Component {
         </Row>
         <Row>
           <Col>
-            <ModalForm buttonLabel="Add Item" item1={exampleItem}  editEndpoint={editEndpoint} addItemToState={this.addItemToState} />
+            <ModalForm buttonLabel="Add Item" item={exampleItem} addEndpoint={this.state.addEndpoint} editEndpoint={editEndpoint} addItemToState={this.addItemToState} />
           </Col>
         </Row>
       </Container>

@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
-import axios from 'axios';
 
 class DataTable extends Component {
 
   deleteItem = id => {
     let delRequest = this.props.delEndpoint + id
-    axios.delete(delRequest
+    fetch(delRequest,{
+      method: 'DELETE'
+    }
     )
       .then(res => {
-        console.log(res.status)
-        if(res.status===200) alert("Place has been deleted")
+        if(res.status%200<100 && res.status<400) alert("Place has been deleted")
         else alert("Place has not been deleted try again or contact with our IT department")
       })
       .then(() => {
@@ -59,7 +59,6 @@ class DataTable extends Component {
   }
 
   render() {
-    const edit = this.props.editEndpoint
     const items = this.props.items.map(item => {
       const values = this.getValues(item)
       return (
@@ -69,7 +68,7 @@ class DataTable extends Component {
           <td>
             <div style={{ width: "110px" }}>
               <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState} editEndpoint={this.props.editEndpoint} />
-              <Button color="danger" onClick={() => this.deleteItem(item.id)}>Del</Button>
+              <Button color="danger" onClick={() => {if (window.confirm('Are you sure you wish to delete this item?')) this.deleteItem(item.id)}}>Del</Button>
             </div>
           </td>
         </tr>
