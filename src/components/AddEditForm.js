@@ -45,11 +45,11 @@ class AddEditForm extends Component {
       body: JSON.stringify(this.state.itemHolder)
     })
       .then(res => {
-        if(res.status%200<100){
+        if(res.status%200<100 && res.status<400){
           this.props.updateState(this.state.itemHolder)
           this.props.toggle()
         } else {
-          console.log('failure')
+          alert("You propably put wrong data type")
         }
       })
       .catch(err => console.log(err))

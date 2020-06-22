@@ -11,14 +11,14 @@ class DataTable extends Component {
     }
     )
       .then(res => {
-        if(res.status%200<100 && res.status<400) alert("Place has been deleted")
-        else alert("Place has not been deleted try again or contact with our IT department")
+        if(res.status%200<100 && res.status<400) alert("Object has been deleted")
+        else alert("Object has not been deleted try again or contact with our IT department")
       })
       .then(() => {
               this.props.deleteItemFromState(id)
             })
       .catch(err =>{
-        alert("Place has not been deleted try again or contact with our IT department")
+        alert("Object has not been deleted try again or contact with our IT department")
         console.log(err)
       })
   }
