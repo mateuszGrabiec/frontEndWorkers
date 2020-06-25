@@ -20,7 +20,7 @@ class LoginForm extends Component {
     render(){
         return (
             <div>
-                <img src={localStorage.getItem('image')}/>
+                <img src={localStorage.getItem('image')} alt=''/>
                 <h1>Log in with Google</h1>
                 <GoogleLogin
                     clientId="784572361533-ongul1hh1kpseg30va1q4sp828gd4bs9.apps.googleusercontent.com"

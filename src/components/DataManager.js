@@ -91,7 +91,7 @@ class DataManager extends Component {
       <Container className="crud">
         <Row>
           <Col>
-          <img src={localStorage.getItem('image')}/>
+          <img src={localStorage.getItem('image')} alt=''/>
           </Col>
         </Row>
         <Row>
