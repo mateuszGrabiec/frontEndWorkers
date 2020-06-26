@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import { Table, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class PlaceTable extends Component {
-
-  constructor (props) {
-    super(props)
-     this.getCarsById = this.getCarsById.bind(this)
-  }
 
   deleteItem = id => {
     let delRequest = this.props.delEndpoint + id
@@ -61,43 +57,21 @@ class PlaceTable extends Component {
     }
     return valTd
   }
-
-  getCars=carsIds=>{
-    let cars=[]
-    for(let i=0;i<carsIds.length;i++){
-      fetch('https://pkowaleckicarsapi.herokuapp.com/getVechicleDetails/'+carsIds[i])
-      .then(res=>res.json())
-      .then(car=>cars.push(car))
-      .catch(err=>console.log(err))
-    }
-    console.log(cars)
-    return cars
-  }
-
-
-  getCarsById = place => {
-    fetch('https://placowki.herokuapp.com/places/cars/all/' + place.id)
-      .then(res => res.json())
-      .then(cars => {
-        const carsIds= cars.map((car) => car.id)
-        return this.getCars(carsIds)
-      })
-      .catch(err => console.log(err))
-  }
+  
 
   render() {
     const items = this.props.items.map((item) => {
       const values = this.getValues(item)
-      const cars=this.getCarsById(item)
-      console.log(cars)
       return (
         <tr key={values[0]}>
           <th scope="row">{values[0]}</th>
           {this.putValsInTd(values)}
-          {cars}
           <td>
             <div style={{ width: "110px" }}>
               <Button color="danger" onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.deleteItem(item.id) }}>Del</Button>
+              <Link to={'/place/'+item.id}>
+                <Button>Show car in place</Button>
+              </Link>
             </div>
           </td>
         </tr>
